@@ -1,0 +1,17 @@
+priority_queue<pair<ll,ll>,vector<pair<ll,ll>>,greater<pair<ll,ll>>> pq;
+  pq.push({0,1});
+  while(!pq.empty()){
+      ll node=pq.top().second;
+      ll dis=pq.top().first;
+      pq.pop();
+      if(dis!=d[node])
+      continue;
+      for(auto it:v[node]){
+          ll x=it.first;
+          ll y=it.second;
+          if(dis+y<d[x]){
+              d[x]=dis+y;
+              pq.push({d[x],x});
+          }
+      }
+  }
