@@ -1,0 +1,16 @@
+ for(ll i=1;i<=n-1;i++){
+       for(ll j=0;j<m;j++){
+           if(d[v[j].a]<INF){
+                 d[v[j].b]=min(d[v[j].b],d[v[j].a]+v[j].c);
+           }
+       }
+   }
+   for(ll i=1;i<=n-1;i++){
+       for(ll j=0;j<m;j++){
+           if(d[v[j].a]<INF){
+               if(d[v[j].b]>d[v[j].a]+v[j].c){
+                   d[v[j].b]=NINF;
+               }
+           }
+       }
+   }
