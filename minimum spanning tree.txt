@@ -1,0 +1,61 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define ll long long
+#define ld long double
+#define pb push_back
+#define rep(i,a,b) for(ll i=a;i<b;i++)
+#define rop(i,a,b) for(ll i=a;i<=b;i++)
+#define mp3 make_pair
+const ll N=2e5+5;
+const ll ln=30;
+ll n,m;
+ll par[N],siz[N];
+struct edge{
+    ll u,v,w;
+};
+vector<edge> e;
+bool comp(edge &t,edge &p){
+    return t.w<p.w;
+}
+ll fp(ll node){
+    if(node==par[node])
+    return node;
+    return par[node]=fp(par[node]);
+}
+int main(){
+    IOS;
+    ll n,m;
+    cin>>n>>m;
+    for(ll i=1;i<=n;i++){
+       par[i]=i;
+       siz[i]=1;
+    }
+    for(ll i=1;i<=m;i++){
+       edge t;
+       cin>>t.u>>t.v>>t.w;
+       e.pb(t);
+    }
+    sort(e.begin(),e.end(),comp);
+    ll x=0,i=0,ans=0;
+    while(i<m&&x<n-1){
+        ll pu=fp(e[i].u);
+        ll pv=fp(e[i].v);
+        if(pu!=pv){
+            if(siz[pu]>siz[pv])
+            swap(siz[pu],siz[pv]);
+            par[pu]=pv;
+            siz[pv]+=siz[pu];
+            ans+=e[i].w;
+            x++;
+        }
+        i++;
+    }
+    if(x==n-1)
+    cout<<ans<<endl;
+    else
+    {
+        cout<<"IMPOSSIBLE"<<endl;
+    }
+    
+}
