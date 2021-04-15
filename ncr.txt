@@ -1,0 +1,18 @@
+ll fact[N]={0};
+void facto(){
+  fact[0]=1;
+  for(ll i=1;i<=N;i++){
+    fact[i]=(i*fact[i-1])%mod;
+  }
+}
+ll ncr(ll n,ll k){
+  ll p=fact[n];
+  ll x=fact[k];
+  ll y=fact[n-k];
+  ll c=pow(x,mod-2,mod);
+  ll d=pow(y,mod-2,mod);
+  ll ans=0;
+  ans=(p*c)%mod;
+  ans=(ans*d)%mod;
+  return ans; 
+}
