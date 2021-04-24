@@ -1,0 +1,70 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define ll long long
+#define ld long double
+#define pb push_back
+#define rep(i,a,b) for(ll i=a;i<b;i++)
+#define rop(i,a,b) for(ll i=a;i<=b;i++)
+#define mp3 make_pair
+const ll N=2e5+5;
+const ll lg=30;
+vector<ll> v[N];
+ll d[N];
+ll n,q;
+void dfs(ll node,ll par){
+   d[node]=d[par]+1;
+   for(auto it:v[node]){
+     if(it!=par){
+       dfs(it,node);
+     }
+   }
+}
+int main(){
+ IOS;
+ cin>>n>>q; 
+ memset(d,0,sizeof(d));
+ ll par[n+1][lg+1];
+ memset(par,-1,sizeof(par));
+ for(ll i=2;i<=n;i++){
+   ll a;
+   cin>>a;
+   v[i].pb(a);
+   v[a].pb(i);
+   par[i][0]=a;
+ }
+ dfs(1,0);
+for(ll i=1;i<=lg;i++){
+  for(ll j=1;j<=n;j++){
+    if(par[j][i-1]!=-1){
+      par[j][i]=par[par[j][i-1]][i-1];
+    }
+    else{
+      par[j][i]=-1;
+    }
+  }
+}
+while(q--){
+  ll a,b;
+  cin>>a>>b;
+  if(d[a]>d[b])
+  swap(a,b);
+  ll cnt=d[b]-d[a];
+  for(ll i=lg;i>=0;i--){
+    if(cnt&(1<<i)){
+      b=par[b][i];
+    }
+  }
+  if(b==a){
+    cout<<a<<endl;
+    continue;
+  }
+ for(ll i=lg;i>=0;i--){
+  if(par[a][i]!=-1&&(par[a][i]!=par[b][i])){
+    a=par[a][i];
+    b=par[b][i];
+  }
+ }
+ cout<<par[b][0]<<endl;
+}
+}
