@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define ll long long
+#define ld long double
+#define pb push_back
+#define rep(i,a,b) for(ll i=a;i<b;i++)
+#define rop(i,a,b) for(ll i=a;i<=b;i++)
+#define mp3 make_pair
+const ll mod=1e9+7;
+const ll INF=1e18;
+const ll NINF=(-1)*INF;
+template<typename T> T pow(T a,T b, long long m){T ans=1; while(b>0){ if(b%2==1) ans=(ans*a)%m; b/=2; a=(a*a)%m; } return ans%m; }
+const ll N=5e3+5;
+
+int main(){
+IOS
+ll n;
+cin>>n;
+ll a[n];
+for(ll i=0;i<n;i++){
+    cin>>a[i];
+}
+ll dp[n][n];
+for(ll i=0;i<n;i++)
+ dp[i][i]=0;
+ for(ll k=1;k<n-1;k++){
+     for(ll i=0;i<n-k-1;i++){
+         ll j=i+k;
+         dp[i][j]=INT_MAX;
+         for(ll c=0;c<j;c++){
+             ll cnt=dp[i][c]+dp[c+1][j]+a[i]*a[c+1]*a[j+1];
+             if(cnt<dp[i][j])
+              dp[i][j]=cnt;
+         }
+     }
+ }
+ cout<<dp[0][n-2]<<endl;
+}
